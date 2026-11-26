@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvStatus: android.widget.TextView
     private lateinit var tvSessionCode: android.widget.TextView
     private lateinit var etCode: android.widget.EditText
-    private lateinit var remoteView: io.getstream.webrtc.android.ui.VideoTextureViewRenderer
+    private lateinit var remoteView: org.webrtc.SurfaceViewRenderer
 
     private var webRtcClient: WebRtcClient? = null
     private var currentCode: String? = null

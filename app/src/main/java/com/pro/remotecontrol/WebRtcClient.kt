@@ -2,6 +2,7 @@ package com.pro.remotecontrol
 
 import android.content.Context
 import android.content.Intent
+import android.media.projection.MediaProjection
 import org.webrtc.*
 
 /**
@@ -70,9 +71,10 @@ class WebRtcClient(
             mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "false"))
         }
         peerConnection?.createOffer(object : SimpleSdpObserver() {
-            override fun onCreateSuccess(desc: SessionDescription) {
-                peerConnection?.setLocalDescription(SimpleSdpObserver(), desc)
-                signaling.createSession(desc.description) {
+                        override fun onCreateSuccess(desc: SessionDescription?) {
+               		    if (desc == null) return
+               		    peerConnection?.setLocalDescription(SimpleSdpObserver(), desc)
+               		    signaling.createSession(desc.description) {
                     signaling.listenForAnswer { answerSdp ->
                         peerConnection?.setRemoteDescription(
                             SimpleSdpObserver(),
@@ -106,10 +108,11 @@ class WebRtcClient(
             SessionDescription(SessionDescription.Type.OFFER, offerSdp)
         )
         peerConnection?.createAnswer(object : SimpleSdpObserver() {
-            override fun onCreateSuccess(desc: SessionDescription) {
-                peerConnection?.setLocalDescription(SimpleSdpObserver(), desc)
-                signaling.sendAnswer(desc.description)
-                signaling.listenForIceCandidates(fromHost = true) { peerConnection?.addIceCandidate(it) }
+                        override fun onCreateSuccess(desc: SessionDescription?) {
+              		    if (desc == null) return
+               		    peerConnection?.setLocalDescription(SimpleSdpObserver(), desc)
+                	    signaling.sendAnswer(desc.description)
+                	    signaling.listenForIceCandidates(fromHost = true) { peerConnection?.addIceCandidate(it) }
             }
         }, MediaConstraints())
     }
