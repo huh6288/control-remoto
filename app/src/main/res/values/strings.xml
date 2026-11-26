@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Control Remoto</string>
+    <string name="accessibility_service_description">Permite que un dispositivo emparejado, con tu autorización explícita, toque la pantalla de este teléfono durante una sesión de control remoto que tú iniciaste y puedes detener en cualquier momento.</string>
+</resources>
